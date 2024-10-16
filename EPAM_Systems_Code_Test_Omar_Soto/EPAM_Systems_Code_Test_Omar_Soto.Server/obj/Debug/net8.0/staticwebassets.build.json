@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "HwMnP6ThUbYoVWTtRJ3S0xc2i8WxnlUmmh2VgQf0j2w=",
+  "Source": "EPAM_Systems_Code_Test_Omar_Soto.Server",
+  "BasePath": "_content/EPAM_Systems_Code_Test_Omar_Soto.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "E:\\EPAM\\EPAM-Systems_Code-Test_Omar-Soto\\EPAM_Systems_Code_Test_Omar_Soto\\epam_systems_code_test_omar_soto.client\\epam_systems_code_test_omar_soto.client.esproj",
+      "Version": 2,
+      "Source": "epam_systems_code_test_omar_soto.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

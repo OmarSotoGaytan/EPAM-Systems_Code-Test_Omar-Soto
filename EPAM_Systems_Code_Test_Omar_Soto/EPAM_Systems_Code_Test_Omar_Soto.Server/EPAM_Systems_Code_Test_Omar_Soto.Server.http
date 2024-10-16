@@ -1,0 +1,6 @@
+@EPAM_Systems_Code_Test_Omar_Soto.Server_HostAddress = http://localhost:5070
+
+GET {{EPAM_Systems_Code_Test_Omar_Soto.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

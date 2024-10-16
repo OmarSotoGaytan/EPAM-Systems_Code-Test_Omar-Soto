@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EPAM_Systems_Code_Test_Omar_Soto.Server.props" />
+</Project>
