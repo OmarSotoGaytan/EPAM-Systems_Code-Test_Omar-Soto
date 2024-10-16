@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:5173",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "E:\\EPAM\\EPAM-Systems_Code-Test_Omar-Soto\\EPAM_Systems_Code_Test_Omar_Soto\\EPAM_Systems_Code_Test_Omar_Soto.Server\\..\\epam_systems_code_test_omar_soto.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
