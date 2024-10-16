@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EPAM_Systems_Code_Test_Omar_Soto.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e794b14ee93e0e3b7763ea95254d7281f50f6c6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("EPAM_Systems_Code_Test_Omar_Soto.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EPAM_Systems_Code_Test_Omar_Soto.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
