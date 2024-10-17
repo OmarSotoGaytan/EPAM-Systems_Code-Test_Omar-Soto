@@ -1,6 +1,6 @@
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect, useRef, useState } from "react";
-import { HubReceivers, HubSenders } from "../HubNames";
+import { HubReceivers, HubSenders, MainHubs } from "../HubNames";
 import { toast } from "react-toastify";
 
 interface UseTextProcessorHub {
@@ -23,6 +23,7 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
     const startProcess = (input: string) => {
         setProcessing(true);
         setOutput('');
+        toast.success('Process has been started.');
         connectionRef.current?.invoke(HubSenders.PROCESS_TEXT, connectionRef.current.connectionId, input);
     };
 
@@ -33,7 +34,7 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
 
     useEffect(() => {
         const connection = new HubConnectionBuilder()
-            .withUrl('https://localhost:7048/textprocessinghub')
+            .withUrl(import.meta.env.VITE_SIGNALR_URL + MainHubs.TEXT_PROCESSOR)
             .build();
 
         connection.on(HubReceivers.RECEIVE_CHAR, (char) => {
@@ -51,6 +52,7 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
         });
 
         connection.start().then(() => {
+            toast.success('Conected Succesfully.');
             connectionRef.current = connection;
         });
 
