@@ -6,14 +6,17 @@ using EPAM_Systems_Code_Test_Omar_Soto.Server.Infrastructure.SignalR.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<ITextProcessorService, TextProcessorService>();
+builder.Services.AddScoped<ITextProcessorService, TextProcessorService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(opt =>
+{
+    opt.MaximumParallelInvocationsPerClient = 10;
+});
 
 //TODO:
 

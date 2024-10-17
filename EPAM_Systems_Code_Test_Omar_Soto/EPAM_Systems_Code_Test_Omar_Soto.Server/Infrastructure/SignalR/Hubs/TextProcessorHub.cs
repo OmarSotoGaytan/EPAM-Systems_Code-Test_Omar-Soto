@@ -8,11 +8,11 @@ public class TextProcessorHub(ITextProcessorService textProcessorService) : Hub
 {
     private readonly ITextProcessorService _textProcessorService = textProcessorService;
 
-    private const int MinValue = 100;
+    private const int MinValue = 1000;
 
-    private const int MaxValue = 500;
+    private const int MaxValue = 5000;
 
-    private static readonly Dictionary<string, CancellationTokenSource> _userTokens = new();
+    public static readonly Dictionary<string, CancellationTokenSource> _userTokens = new();
 
     public async Task ProcessText(string connectionId, string input)
     {
@@ -27,13 +27,15 @@ public class TextProcessorHub(ITextProcessorService textProcessorService) : Hub
 
             foreach (char c in result.Result)
             {
+                tokenSource.Token.ThrowIfCancellationRequested();
+
                 await Task.Delay(Random.Shared.Next(MinValue, MaxValue), tokenSource.Token);
-                await Clients.Caller.SendAsync(HubNames.ReceiveCharacters, c);
+                await Clients.Caller.SendAsync(HubNames.ReceiveCharacters, c, tokenSource.Token);
             }
 
-            await Clients.Caller.SendAsync("ProcessCompleted");
+            await Clients.Caller.SendAsync("ProcessCompleted", tokenSource.Token);
         }
-        catch (TaskCanceledException)
+        catch (Exception)
         {
             await Clients.Caller.SendAsync("ProcessCancelled");
         }
@@ -41,6 +43,7 @@ public class TextProcessorHub(ITextProcessorService textProcessorService) : Hub
         {
             _userTokens.Remove(connectionId);
         }
+
     }
 
     public void CancelProcess(string connectionId)
