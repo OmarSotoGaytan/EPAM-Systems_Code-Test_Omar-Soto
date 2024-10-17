@@ -7,13 +7,19 @@ public class TextProcessorHub(ITextProcessorService textProcessorService) : Hub
 {
     private readonly ITextProcessorService _textProcessorService = textProcessorService;
 
-    public async Task ProcessText(string input)
+    private const int MinValue = 100;
+
+    private const int MaxValue = 500;
+
+    public async Task ProcessText(string connectionId, string input, CancellationToken cancellationToken)
     {
-        var result = await _textProcessorService.ProcessAsync(input, CancellationToken.None);
+        var result = _textProcessorService.ProcessInput(input);
 
         foreach (char c in result.Result)
         {
-            await Clients.Caller.SendAsync("ReceiveCharacter", c);
+            await Task.Delay(new Random().Next(MinValue, MaxValue), cancellationToken);
+
+            await Clients.Caller.SendAsync("ReceiveCharacter", c, cancellationToken);
         }
     }
 }

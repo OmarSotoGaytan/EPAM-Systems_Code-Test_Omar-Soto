@@ -34,3 +34,7 @@ E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_S
 E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_Systems_Code_Test_Omar_Soto.Server\obj\Debug\net8.0\EPAM_Systems_Code_Test_Omar_Soto.Server.pdb
 E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_Systems_Code_Test_Omar_Soto.Server\obj\Debug\net8.0\EPAM_Systems_Code_Test_Omar_Soto.Server.genruntimeconfig.cache
 E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_Systems_Code_Test_Omar_Soto.Server\obj\Debug\net8.0\ref\EPAM_Systems_Code_Test_Omar_Soto.Server.dll
+E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_Systems_Code_Test_Omar_Soto.Server\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_Systems_Code_Test_Omar_Soto.Server\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Common.dll
+E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_Systems_Code_Test_Omar_Soto.Server\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+E:\EPAM\EPAM-Systems_Code-Test_Omar-Soto\EPAM_Systems_Code_Test_Omar_Soto\EPAM_Systems_Code_Test_Omar_Soto.Server\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

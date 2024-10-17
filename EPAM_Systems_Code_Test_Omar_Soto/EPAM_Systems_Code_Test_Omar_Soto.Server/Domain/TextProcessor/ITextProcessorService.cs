@@ -2,5 +2,5 @@
 
 public interface ITextProcessorService
 {
-    Task<TextProcessResult> ProcessAsync(string input, CancellationToken cancellationToken);
+    TextProcessResult ProcessInput(string input);
 }

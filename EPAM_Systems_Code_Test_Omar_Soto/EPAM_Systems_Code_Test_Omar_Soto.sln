@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM_Systems_Code_Test_Omar_Soto.Server", "EPAM_Systems_Code_Test_Omar_Soto.Server\EPAM_Systems_Code_Test_Omar_Soto.Server.csproj", "{262CEA42-0D05-413F-A3E0-978B8FB3A1DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM_Systems_Code_Test_Omar_Soto.Server", "EPAM_Systems_Code_Test_Omar_Soto.Server\EPAM_Systems_Code_Test_Omar_Soto.Server.csproj", "{262CEA42-0D05-413F-A3E0-978B8FB3A1DE}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "epam_systems_code_test_omar_soto.client", "epam_systems_code_test_omar_soto.client\epam_systems_code_test_omar_soto.client.esproj", "{C8016C37-394F-4487-A8F3-0FA1FD6983C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM_Systems_Code_UnitTests", "EPAM_Systems_Code_UnitTests\EPAM_Systems_Code_UnitTests.csproj", "{A225CE83-CBB1-47AB-9521-FD9C0BA20FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{C8016C37-394F-4487-A8F3-0FA1FD6983C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8016C37-394F-4487-A8F3-0FA1FD6983C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8016C37-394F-4487-A8F3-0FA1FD6983C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A225CE83-CBB1-47AB-9521-FD9C0BA20FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A225CE83-CBB1-47AB-9521-FD9C0BA20FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A225CE83-CBB1-47AB-9521-FD9C0BA20FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A225CE83-CBB1-47AB-9521-FD9C0BA20FB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
