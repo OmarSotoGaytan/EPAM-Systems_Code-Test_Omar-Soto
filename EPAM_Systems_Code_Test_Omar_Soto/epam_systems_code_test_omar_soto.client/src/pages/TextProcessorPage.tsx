@@ -28,7 +28,7 @@ export const TextProcessorPage = () => {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl("https://localhost:7048/process")
+            .withUrl("https://localhost:7048/textprocessinghub")
             .withAutomaticReconnect()
             .build();
 
@@ -62,4 +62,3 @@ export const TextProcessorPage = () => {
         </div>
     );
 };
-

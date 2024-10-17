@@ -1,4 +1,5 @@
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Application.TextProcessor;
+using EPAM_Systems_Code_Test_Omar_Soto.Server.Domain.Constants.Hubs;
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Domain.TextProcessor;
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Infrastructure.SignalR.Hubs;
 
@@ -13,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSignalR();
+
+//TODO:
 
 builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
 builder =>
@@ -44,7 +47,7 @@ app.MapControllers();
 app.MapFallbackToFile("/index.html");
 app.UseCors("CorsPolicy");
 
-app.MapHub<TextProcessorHub>("/process", options =>
+app.MapHub<TextProcessorHub>("/"+HubNames.TextProcessingHub, options =>
 {
     options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets |
                          Microsoft.AspNetCore.Http.Connections.HttpTransportType.LongPolling;
