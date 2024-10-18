@@ -1,7 +1,9 @@
-﻿using EPAM_Systems_Code_Test_Omar_Soto.Server.Domain.Constants.Hubs;
+﻿using Castle.Core.Logging;
+using EPAM_Systems_Code_Test_Omar_Soto.Server.Domain.Constants.Hubs;
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Domain.TextProcessor;
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Infrastructure.SignalR.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace EPAM_Systems_Code_UnitTests.Infrastructure.SignalR.Hubs;
@@ -14,12 +16,15 @@ namespace EPAM_Systems_Code_UnitTests.Infrastructure.SignalR.Hubs;
 public class TextProcessorHubTests
 {
     private readonly Mock<ITextProcessorService> _mockTextProcessorService;
+    private readonly Mock<ILogger<TextProcessorHub>> _loggerService;
     private readonly TextProcessorHub _hub;
 
     public TextProcessorHubTests()
     {
         _mockTextProcessorService = new Mock<ITextProcessorService>();
-        _hub = new TextProcessorHub(_mockTextProcessorService.Object);
+        _loggerService = new Mock<ILogger<TextProcessorHub>>();
+
+        _hub = new TextProcessorHub(_mockTextProcessorService.Object, _loggerService.Object);
     }
 
     [Fact]

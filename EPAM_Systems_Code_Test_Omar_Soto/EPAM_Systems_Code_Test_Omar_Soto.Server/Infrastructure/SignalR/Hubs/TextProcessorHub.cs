@@ -13,7 +13,7 @@ public class TextProcessorHub(ITextProcessorService textProcessorService, ILogge
 
     private const int MaxValue = 5000;
 
-    public static readonly Dictionary<string, CancellationTokenSource> _userTokens = new();
+    public static readonly Dictionary<string, CancellationTokenSource> _userTokens = [];
 
     public async Task ProcessText(string connectionId, string input)
     {

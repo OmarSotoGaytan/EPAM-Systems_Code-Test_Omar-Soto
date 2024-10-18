@@ -30,6 +30,7 @@ public class TextProcessorServiceTests
     [InlineData("aaab", "a3b1/YWFhYg==")]
     [InlineData("123", "112131/MTIz")]
     [InlineData(" ", " 1/IA==")]
+    [InlineData("Hello, World!", " 1!1,1H1W1d1e1l3o2r1/SGVsbG8sIFdvcmxkIQ==")]
     public void ProcessInput_ShouldReturnExpectedResult(string input, string expectedResult)
     {
         // Arrange
@@ -39,7 +40,6 @@ public class TextProcessorServiceTests
         var result = service.ProcessInput(input);
 
         // Assert
-        Assert.NotNull(result);
         Assert.Equal(expectedResult, result.Result);
     }
 }

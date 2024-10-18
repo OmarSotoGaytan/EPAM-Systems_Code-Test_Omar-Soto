@@ -10,7 +10,7 @@ public static class SignalRInfrastructureDI
         app.MapHub<TextProcessorHub>("/" + HubNames.TextProcessingHub, options =>
         {
             options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets |
-                                 Microsoft.AspNetCore.Http.Connections.HttpTransportType.LongPolling;
+                Microsoft.AspNetCore.Http.Connections.HttpTransportType.LongPolling;
         });
 
         return app;
