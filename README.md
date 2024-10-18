@@ -20,7 +20,7 @@
 - The **Application** layer holds the business logic, which, in this case, corresponds to the **TextProcessor**.
 
 ### Infrastructure Layer
-- The **Infrastructure** layer serves as the integration point for external libraries that are outside the business logic.
+- The **Infrastructure** layer serves as the integration point for external libraries that are outside the business logic, in this case the one i'm using it's **signalr**.
 ### Testing
 - A separate project was created specifically for the unit tests to maintain a clear structure and organization.
 - **xUnit** and **Moq** were utilized for unit testing.
@@ -29,7 +29,7 @@
 - It is important to run the command `npm install` to install the necessary dependencies.
 
 ### Environment Configuration
-- You need to modify the `.env` file to include the URL where the application is running. In this case, my `.env.local` file looks like this:
+- You need to modify the `.env` file to include the URL where the application back-end is running. In this case, my `.env.local` file looks like this:
 - VITE_SIGNALR_URL=https://localhost:7048/
 
 ### Libraries Used
