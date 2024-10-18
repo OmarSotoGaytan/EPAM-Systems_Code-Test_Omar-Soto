@@ -1,31 +1,30 @@
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Application.TextProcessor;
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Domain.Constants.Hubs;
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Domain.TextProcessor;
+using EPAM_Systems_Code_Test_Omar_Soto.Server.Infrastructure;
 using EPAM_Systems_Code_Test_Omar_Soto.Server.Infrastructure.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var allowedOrigins = builder.Configuration.GetSection("CorsSettings:AllowedOrigins").Get<string[]>();
 
 // Add services to the container.
 builder.Services.AddScoped<ITextProcessorService, TextProcessorService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSignalR(opt =>
-{
-    opt.MaximumParallelInvocationsPerClient = 10;
-});
+//Extension Method to add new nugets in the future.
+builder.Services.AddInfrastructure();
 
-//TODO:
-
-builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
-builder =>
+//Configuring CORS
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
 {
-    builder.AllowAnyHeader()
+    builder.WithOrigins(allowedOrigins ?? []).AllowAnyHeader()
             .AllowAnyMethod()
-            .SetIsOriginAllowed((host) => true)
             .AllowCredentials();
 }));
 
@@ -50,10 +49,7 @@ app.MapControllers();
 app.MapFallbackToFile("/index.html");
 app.UseCors("CorsPolicy");
 
-app.MapHub<TextProcessorHub>("/"+HubNames.TextProcessingHub, options =>
-{
-    options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets |
-                         Microsoft.AspNetCore.Http.Connections.HttpTransportType.LongPolling;
-});
+//Extension Method that handles all the SignalR Hubs
+app.AddSignalRHubs();
 
 app.Run();

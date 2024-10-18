@@ -24,4 +24,22 @@ public class TextProcessorServiceTests
         Assert.Contains(encoded64Input, result.Result);
         Assert.Equal(expectedCharOcurrences + encoded64Input, result.Result);
     }
+
+    [Theory]
+    [InlineData("abc", "a1b1c1/YWJj")]
+    [InlineData("aaab", "a3b1/YWFhYg==")]
+    [InlineData("123", "112131/MTIz")]
+    [InlineData(" ", " 1/IA==")]
+    public void ProcessInput_ShouldReturnExpectedResult(string input, string expectedResult)
+    {
+        // Arrange
+        var service = new TextProcessorService();
+
+        // Act
+        var result = service.ProcessInput(input);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedResult, result.Result);
+    }
 }
