@@ -17,6 +17,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Add Logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 //Extension Method to add new nugets in the future.
 builder.Services.AddInfrastructure();
 
