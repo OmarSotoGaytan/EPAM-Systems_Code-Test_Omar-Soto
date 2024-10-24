@@ -5,4 +5,8 @@ public static class HubReceiverNames
     public const string ReceiveCharacters = "ReceiveCharacters";
 
     public const string ReceiveProgress = "ReceiveProgress";
+
+    public const string ProcessCompleted = "ProcessCompleted";
+
+    public const string ProcessCancelled = "ProcessCancelled";
 }

@@ -49,9 +49,10 @@ public class TextProcessorHubTests
         await _hub.ProcessText(connectionId, input);
 
         // Assert
-        mockClientProxy.Verify(proxy => proxy.SendCoreAsync(HubNames.ReceiveCharacters, It.IsAny<object[]>(), It.IsAny<CancellationToken>()), Times.Exactly(5));
+        mockClientProxy.Verify(proxy => proxy.SendCoreAsync(HubReceiverNames.ReceiveCharacters, It.IsAny<object[]>(), It.IsAny<CancellationToken>()), Times.Exactly(5));
+        mockClientProxy.Verify(proxy => proxy.SendCoreAsync(HubReceiverNames.ReceiveProgress, It.IsAny<object[]>(), It.IsAny<CancellationToken>()), Times.Exactly(5));
 
-        mockClientProxy.Verify(proxy => proxy.SendCoreAsync("ProcessCompleted", It.IsAny<object[]>(), It.IsAny<CancellationToken>()), Times.Once);
+        mockClientProxy.Verify(proxy => proxy.SendCoreAsync(HubReceiverNames.ProcessCompleted, It.IsAny<object[]>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -78,6 +79,6 @@ public class TextProcessorHubTests
         _hub.CancelProcess(connectionId);
 
         // Assert
-        mockClientProxy.Verify(proxy => proxy.SendCoreAsync("ProcessCancelled", It.IsAny<object[]>(), It.IsAny<CancellationToken>()), Times.Once);
+        mockClientProxy.Verify(proxy => proxy.SendCoreAsync(HubReceiverNames.ProcessCancelled, It.IsAny<object[]>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

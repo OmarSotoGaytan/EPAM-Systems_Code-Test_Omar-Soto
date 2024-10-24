@@ -51,13 +51,13 @@ public class TextProcessorHub(ITextProcessorService textProcessorService, ILogge
                 await Clients.Caller.SendAsync(HubReceiverNames.ReceiveCharacters, c, tokenSource.Token);
             }
 
-            await Clients.Caller.SendAsync("ProcessCompleted", tokenSource.Token);
+            await Clients.Caller.SendAsync(HubReceiverNames.ProcessCompleted, tokenSource.Token);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Error processing text for connection {connectionId}.");
 
-            await Clients.Caller.SendAsync("ProcessCancelled");
+            await Clients.Caller.SendAsync(HubReceiverNames.ProcessCancelled);
         }
         finally
         {

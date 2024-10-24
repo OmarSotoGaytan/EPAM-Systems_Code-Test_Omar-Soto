@@ -42,4 +42,22 @@ public class TextProcessorServiceTests
         // Assert
         Assert.Equal(expectedResult, result.Result);
     }
+
+    [Theory]
+    [InlineData(0, 10, 0)]
+    [InlineData(5, 10, 50)]
+    [InlineData(10, 10, 100)]
+    [InlineData(2, 5, 40)]
+    public void GetProgressValue_ShouldReturnExpectedValue(
+        int currentCharIndex, int totalResultLength, int expectedProgress)
+    {
+        //Arrange
+        var service = new TextProcessorService();
+
+        // Act
+        var result = service.GetProgressValue(currentCharIndex, totalResultLength);
+
+        // Assert
+        Assert.Equal(expectedProgress, result);
+    }
 }
