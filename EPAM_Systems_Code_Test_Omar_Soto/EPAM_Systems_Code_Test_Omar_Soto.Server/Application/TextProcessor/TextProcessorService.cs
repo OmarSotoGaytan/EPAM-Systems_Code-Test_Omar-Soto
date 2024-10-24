@@ -19,4 +19,7 @@ public class TextProcessorService : ITextProcessorService
             Result = result
         };
     }
+
+    public int GetProgressValue(int currentCharIndex, int totalResultLength) => 
+        (currentCharIndex * 100) / totalResultLength;
 }

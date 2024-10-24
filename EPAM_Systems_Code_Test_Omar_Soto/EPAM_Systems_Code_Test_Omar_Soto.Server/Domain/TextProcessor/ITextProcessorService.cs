@@ -3,4 +3,6 @@
 public interface ITextProcessorService
 {
     TextProcessResult ProcessInput(string input);
+
+    int GetProgressValue(int currentCharIndex, int totalResultLength);
 }

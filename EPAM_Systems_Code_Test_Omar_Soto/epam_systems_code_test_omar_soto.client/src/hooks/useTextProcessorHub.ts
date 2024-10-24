@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 interface UseTextProcessorHub {
     output: string;
+    progressValue: number;
     processing: boolean;
     startProcess: (input: string) => void;
     cancelProcess: () => void;
@@ -13,18 +14,23 @@ interface UseTextProcessorHub {
 export const useTextProcessorHub = (): UseTextProcessorHub => {
     const [output, setOutput] = useState('');
     const [processing, setProcessing] = useState(false);
+    const [progressValue, setProgressValue] = useState(0);
+
     const connectionRef = useRef<HubConnection | null>(null);
 
     const reset = () => {
         setProcessing(false);
         setOutput('');
+        setProgressValue(0);
     };
 
     const startProcess = (input: string) => {
         setProcessing(true);
         setOutput('');
-        toast.success('Process has been started.');
+        setProgressValue(0);
+
         connectionRef.current?.invoke(HubSenders.PROCESS_TEXT, connectionRef.current.connectionId, input);
+        toast.success('Process has been started.');
     };
 
     const cancelProcess = () => {
@@ -39,6 +45,11 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
 
         connection.on(HubReceivers.RECEIVE_CHAR, (char) => {
             setOutput((prev) => prev + char);
+        });
+
+        connection.on(HubReceivers.RECEIVE_PROGRESS, (progressVal) => {
+            console.log('p', progressVal);
+            setProgressValue(progressVal);
         });
 
         connection.on(HubReceivers.PROCESS_CANCELLED, () => {
@@ -64,6 +75,7 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
 
     return {
         output,
+        progressValue,
         processing,
         startProcess,
         cancelProcess

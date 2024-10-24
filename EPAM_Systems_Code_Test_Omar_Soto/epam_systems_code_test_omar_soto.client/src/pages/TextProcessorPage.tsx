@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { InputButton } from "../components/InputButton";
 import { useTextProcessorHub } from "../hooks/useTextProcessorHub";
 import { InputText } from "../components/InputText";
+import { ProgressBar } from "../components/ProgressBar";
+import { OutputTextarea } from "../components/OutputTextArea";
 
 export const TextProcessorPage = () => {
-    const { output, processing, startProcess, cancelProcess } = useTextProcessorHub();
+    const { output, progressValue, processing, startProcess, cancelProcess } = useTextProcessorHub();
 
     const [input, setInput] = useState('');
 
@@ -21,9 +23,6 @@ export const TextProcessorPage = () => {
 
     return (
         <div className="w-full flex flex-col items-center justify-center gap-5">
-            <h1 className="text-2xl font-bold underline">
-                EPAM Systems - Code Test - Omar Soto
-            </h1>
             <InputText
                 value={input}
                 onChange={(val) => setInput(val)}
@@ -41,10 +40,8 @@ export const TextProcessorPage = () => {
                     Cancel
                 </InputButton>
             </div>
-            <div>
-                <span>Output:</span>
-                <span>{output}</span>
-            </div>
+            <OutputTextarea label="Output" value={output} />
+            <ProgressBar min={0} max={0} progressValue={progressValue} />          
         </div>
     );
 };

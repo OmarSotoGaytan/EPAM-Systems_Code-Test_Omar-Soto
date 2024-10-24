@@ -31,14 +31,24 @@ public class TextProcessorHub(ITextProcessorService textProcessorService, ILogge
 
         try
         {
-            var result = _textProcessorService.ProcessInput(input);
+            var processedInput = _textProcessorService.ProcessInput(input);
 
-            foreach (char c in result.Result)
+            var processedChar = 0;
+            var processedInpuLength = processedInput.Result.Length;
+
+            foreach (char c in processedInput.Result)
             {
                 tokenSource.Token.ThrowIfCancellationRequested();
 
                 await Task.Delay(Random.Shared.Next(MinValue, MaxValue), tokenSource.Token);
-                await Clients.Caller.SendAsync(HubNames.ReceiveCharacters, c, tokenSource.Token);
+
+                processedChar++;
+
+                var progress = _textProcessorService.GetProgressValue(processedChar, processedInpuLength);
+
+                await Clients.Caller.SendAsync(HubReceiverNames.ReceiveProgress, progress);
+
+                await Clients.Caller.SendAsync(HubReceiverNames.ReceiveCharacters, c, tokenSource.Token);
             }
 
             await Clients.Caller.SendAsync("ProcessCompleted", tokenSource.Token);
@@ -55,7 +65,6 @@ public class TextProcessorHub(ITextProcessorService textProcessorService, ILogge
 
             _userTokens.Remove(connectionId);
         }
-
     }
 
     public void CancelProcess(string connectionId)
