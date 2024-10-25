@@ -1,30 +1,30 @@
-# Etapa 1: Construcción de la app
+# Use a lightweight Node.js 18 image as the base to build the app
 FROM node:18-alpine AS builder
 
-# Establece el directorio de trabajo dentro del contenedor
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copia los archivos necesarios
+# Copy the necessary files
 COPY package*.json ./
 COPY vite.config.* ./
 
-# Instala las dependencias
+# Install dependencies
 RUN npm install
 
-# Copia el resto del código fuente
+# Copy the rest of the source code
 COPY . .
 
-# Compila la aplicación
+# Build the application
 RUN npm run build
 
-# Etapa 2: Servir la app usando un servidor web (nginx)
+# Stage 2: Serve the app using a web server (nginx)
 FROM nginx:alpine
 
-# Copia los archivos compilados al directorio de nginx
+# Copy the built files to the nginx directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Expone el puerto que usará nginx
+# Expose the port that nginx will use
 EXPOSE 80
 
-# Inicia nginx
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
