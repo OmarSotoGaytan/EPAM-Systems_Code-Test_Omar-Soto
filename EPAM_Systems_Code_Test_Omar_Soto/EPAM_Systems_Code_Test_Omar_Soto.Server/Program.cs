@@ -4,8 +4,6 @@ using EPAM_Systems_Code_Test_Omar_Soto.Server.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var allowedOrigins = builder.Configuration.GetSection("CorsSettings:AllowedOrigins").Get<string[]>();
-
 // Add services to the container.
 builder.Services.AddScoped<ITextProcessorService, TextProcessorService>();
 
@@ -23,12 +21,18 @@ builder.Logging.AddConsole();
 builder.Services.AddInfrastructure();
 
 //Configuring CORS
-//builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
-//{
-//    builder.WithOrigins(allowedOrigins ?? []).AllowAnyHeader()
-//            .AllowAnyMethod()
-//            .AllowCredentials();
-//}));
+if (builder.Environment.IsDevelopment())
+{
+    var allowedOrigins = builder.Configuration.GetSection("CorsSettings:AllowedOrigins").Get<string[]>();
+
+    builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.WithOrigins(allowedOrigins ?? [])
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    }));
+}
 
 var app = builder.Build();
 
@@ -40,6 +44,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("CorsPolicy");
 }
 
 app.UseHttpsRedirection();
@@ -49,11 +54,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
-//app.UseCors("CorsPolicy");
 
 //Extension Method that handles all the SignalR Hubs
 app.AddSignalRHubs();
-
-app.MapGet("/hello", () => Results.Ok("Hello, the API is working!"));
 
 app.Run();

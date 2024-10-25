@@ -20,9 +20,9 @@ public class TextProcessorServiceTests
         var encoded64Input = input.ConvertToBase64();
 
         //Assert
-        Assert.Contains(expectedCharOcurrences, result.Result);
-        Assert.Contains(encoded64Input, result.Result);
-        Assert.Equal(expectedCharOcurrences + encoded64Input, result.Result);
+        Assert.Contains(expectedCharOcurrences, result);
+        Assert.Contains(encoded64Input, result);
+        Assert.Equal(expectedCharOcurrences + encoded64Input, result);
     }
 
     [Theory]
@@ -40,7 +40,7 @@ public class TextProcessorServiceTests
         var result = service.ProcessInput(input);
 
         // Assert
-        Assert.Equal(expectedResult, result.Result);
+        Assert.Equal(expectedResult, result);
     }
 
     [Theory]

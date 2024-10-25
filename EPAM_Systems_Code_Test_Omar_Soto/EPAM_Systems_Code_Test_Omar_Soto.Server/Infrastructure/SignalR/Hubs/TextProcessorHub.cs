@@ -26,6 +26,15 @@ public class TextProcessorHub(ITextProcessorService textProcessorService, ILogge
             return;
         }
 
+        if (string.IsNullOrEmpty(input))
+        {
+            _logger.LogError($"Error processing empty text for connection {connectionId}.");
+
+            await Clients.Caller.SendAsync(HubReceiverNames.ProcessCancelled);
+
+            return;
+        }
+
         var tokenSource = new CancellationTokenSource();
         _userTokens[connectionId] = tokenSource;
 
@@ -34,9 +43,11 @@ public class TextProcessorHub(ITextProcessorService textProcessorService, ILogge
             var processedInput = _textProcessorService.ProcessInput(input);
 
             var processedChar = 0;
-            var processedInpuLength = processedInput.Result.Length;
+            var processedInpuLength = processedInput.Length;
 
-            foreach (char c in processedInput.Result)
+            var textProcessorResult = new TextProcessResult();
+
+            foreach (char c in processedInput)
             {
                 tokenSource.Token.ThrowIfCancellationRequested();
 
@@ -44,11 +55,10 @@ public class TextProcessorHub(ITextProcessorService textProcessorService, ILogge
 
                 processedChar++;
 
-                var progress = _textProcessorService.GetProgressValue(processedChar, processedInpuLength);
+                textProcessorResult.CurrentChar = c;
+                textProcessorResult.Progress = _textProcessorService.GetProgressValue(processedChar, processedInpuLength);
 
-                await Clients.Caller.SendAsync(HubReceiverNames.ReceiveProgress, progress);
-
-                await Clients.Caller.SendAsync(HubReceiverNames.ReceiveCharacters, c, tokenSource.Token);
+                await Clients.Caller.SendAsync(HubReceiverNames.ReceiveProgress, textProcessorResult, tokenSource.Token);
             }
 
             await Clients.Caller.SendAsync(HubReceiverNames.ProcessCompleted, tokenSource.Token);

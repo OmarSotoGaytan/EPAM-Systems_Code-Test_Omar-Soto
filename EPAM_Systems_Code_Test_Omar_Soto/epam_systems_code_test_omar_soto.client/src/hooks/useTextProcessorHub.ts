@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { getBasicAuthToken } from "../auth";
 import { HubReceivers, HubSenders, MainHubs } from "../HubNames";
+import { TextProcessorResult } from "../entities";
 
 interface UseTextProcessorHub {
     output: string;
@@ -11,6 +12,9 @@ interface UseTextProcessorHub {
     startProcess: (input: string) => void;
     cancelProcess: () => void;
 }
+
+const RECONNECT_TIMEOUT_MS = 60000;
+const MAX_RETRY_DELAY_MS = 10000;
 
 export const useTextProcessorHub = (): UseTextProcessorHub => {
     const [output, setOutput] = useState('');
@@ -47,24 +51,21 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
                 }
             }).withAutomaticReconnect({
                 nextRetryDelayInMilliseconds: retryContext => {
-                    if (retryContext.elapsedMilliseconds < 60000) { 
-                        // If we've been reconnecting for less than 60 seconds so far,
-                        // wait between 0 and 10 seconds before the next reconnect attempt.
-                        return Math.random() * 10000;
+                    if (retryContext.elapsedMilliseconds < RECONNECT_TIMEOUT_MS) { 
+                        // If we've been reconnecting for less than RECONNECT_TIMEOUT_MS seconds so far,
+                        // wait between 0 and MAX_RETRY_DELAY_MS seconds before the next reconnect attempt.
+                        return Math.random() * MAX_RETRY_DELAY_MS;
                     } else {
-                        // If we've been reconnecting for more than 60 seconds so far, stop reconnecting.
+                        // If we've been reconnecting for more than RECONNECT_TIMEOUT_MS seconds so far, stop reconnecting.
                         return null;
                     }
                 }
             })
             .build();
 
-        connection.on(HubReceivers.RECEIVE_CHAR, (char) => {
-            setOutput((prev) => prev + char);
-        });
-
-        connection.on(HubReceivers.RECEIVE_PROGRESS, (progressVal) => {
-            setProgressValue(progressVal);
+        connection.on(HubReceivers.RECEIVE_PROGRESS, (result: TextProcessorResult) => {
+            setOutput((prev) => prev + result.currentChar);
+            setProgressValue(result.progress);
         });
 
         connection.on(HubReceivers.PROCESS_CANCELLED, () => {

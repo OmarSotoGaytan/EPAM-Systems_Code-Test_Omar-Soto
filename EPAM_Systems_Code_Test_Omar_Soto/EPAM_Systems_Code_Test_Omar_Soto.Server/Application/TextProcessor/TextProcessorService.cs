@@ -6,7 +6,7 @@ namespace EPAM_Systems_Code_Test_Omar_Soto.Server.Application.TextProcessor;
 
 public class TextProcessorService : ITextProcessorService
 {
-    public TextProcessResult ProcessInput(string input)
+    public string ProcessInput(string input)
     {
         var charOccurences = StringUtils.CountCharacterOccurrences(input);
 
@@ -14,10 +14,7 @@ public class TextProcessorService : ITextProcessorService
 
         var result = $"{string.Join("", charOccurences)}/{base64Encoded}";
 
-        return new TextProcessResult 
-        { 
-            Result = result
-        };
+        return result;
     }
 
     public int GetProgressValue(int currentCharIndex, int totalResultLength) => 

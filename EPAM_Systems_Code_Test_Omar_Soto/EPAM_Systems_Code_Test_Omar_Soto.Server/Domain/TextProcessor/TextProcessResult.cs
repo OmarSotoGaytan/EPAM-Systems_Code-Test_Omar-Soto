@@ -2,5 +2,7 @@
 
 public record TextProcessResult
 {
-    public string Result { get; set; } = string.Empty;
+    public char CurrentChar { get; set; }
+
+    public int Progress { get; set; }
 }

@@ -2,7 +2,7 @@
 
 public interface ITextProcessorService
 {
-    TextProcessResult ProcessInput(string input);
+    string ProcessInput(string input);
 
     int GetProgressValue(int currentCharIndex, int totalResultLength);
 }

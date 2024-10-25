@@ -5,7 +5,6 @@ export const MainHubs = {
 export const HubReceivers = {
     PROCESS_CANCELLED: 'ProcessCancelled',
     PROCESS_COMPLETED: 'ProcessCompleted',
-    RECEIVE_CHAR: 'ReceiveCharacters',
     RECEIVE_PROGRESS: 'ReceiveProgress',
 };
 
