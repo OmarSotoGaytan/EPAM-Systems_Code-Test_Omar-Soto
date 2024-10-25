@@ -11,6 +11,11 @@ interface UseTextProcessorHub {
     cancelProcess: () => void;
 }
 
+const userName = import.meta.env.VITE_USER;
+const password = import.meta.env.VITE_PASSWORD;
+
+const token = btoa(`${userName}:${password}`);
+
 export const useTextProcessorHub = (): UseTextProcessorHub => {
     const [output, setOutput] = useState('');
     const [processing, setProcessing] = useState(false);
@@ -40,7 +45,11 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
 
     useEffect(() => {
         const connection = new HubConnectionBuilder()
-            .withUrl(import.meta.env.VITE_SIGNALR_URL + MainHubs.TEXT_PROCESSOR)
+            .withUrl(import.meta.env.VITE_SIGNALR_URL + MainHubs.TEXT_PROCESSOR, {
+                headers: {
+                    'Authorization': `Basic ${token}`
+                }
+            })
             .build();
 
         connection.on(HubReceivers.RECEIVE_CHAR, (char) => {

@@ -23,12 +23,12 @@ builder.Logging.AddConsole();
 builder.Services.AddInfrastructure();
 
 //Configuring CORS
-builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
-{
-    builder.WithOrigins(allowedOrigins ?? []).AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-}));
+//builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+//{
+//    builder.WithOrigins(allowedOrigins ?? []).AllowAnyHeader()
+//            .AllowAnyMethod()
+//            .AllowCredentials();
+//}));
 
 var app = builder.Build();
 
@@ -49,9 +49,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
-app.UseCors("CorsPolicy");
+//app.UseCors("CorsPolicy");
 
 //Extension Method that handles all the SignalR Hubs
 app.AddSignalRHubs();
+
+app.MapGet("/hello", () => Results.Ok("Hello, the API is working!"));
 
 app.Run();

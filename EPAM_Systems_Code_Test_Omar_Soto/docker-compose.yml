@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: ./EPAM_Systems_Code_Test_Omar_Soto.Server
+      dockerfile: Dockerfile
+    container_name: api-container
+    ports:
+      - "8080:8080"
+
+  ui:
+    build:
+      context: ./epam_systems_code_test_omar_soto.client
+      dockerfile: Dockerfile
+    container_name: ui-container
+    ports:
+      - "3000:80"
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx-container
+    ports:
+      - "8081:80"
+    depends_on:
+      - api
+      - ui
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd
