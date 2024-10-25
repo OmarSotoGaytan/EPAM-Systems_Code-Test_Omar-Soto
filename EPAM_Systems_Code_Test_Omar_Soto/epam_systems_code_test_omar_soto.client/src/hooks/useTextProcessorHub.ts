@@ -1,7 +1,8 @@
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect, useRef, useState } from "react";
-import { HubReceivers, HubSenders, MainHubs } from "../HubNames";
 import { toast } from "react-toastify";
+import { getBasicAuthToken } from "../auth";
+import { HubReceivers, HubSenders, MainHubs } from "../HubNames";
 
 interface UseTextProcessorHub {
     output: string;
@@ -10,11 +11,6 @@ interface UseTextProcessorHub {
     startProcess: (input: string) => void;
     cancelProcess: () => void;
 }
-
-const userName = import.meta.env.VITE_USER;
-const password = import.meta.env.VITE_PASSWORD;
-
-const token = btoa(`${userName}:${password}`);
 
 export const useTextProcessorHub = (): UseTextProcessorHub => {
     const [output, setOutput] = useState('');
@@ -47,7 +43,18 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
         const connection = new HubConnectionBuilder()
             .withUrl(import.meta.env.VITE_SIGNALR_URL + MainHubs.TEXT_PROCESSOR, {
                 headers: {
-                    'Authorization': `Basic ${token}`
+                    'Authorization': `Basic ${getBasicAuthToken()}`
+                }
+            }).withAutomaticReconnect({
+                nextRetryDelayInMilliseconds: retryContext => {
+                    if (retryContext.elapsedMilliseconds < 60000) { 
+                        // If we've been reconnecting for less than 60 seconds so far,
+                        // wait between 0 and 10 seconds before the next reconnect attempt.
+                        return Math.random() * 10000;
+                    } else {
+                        // If we've been reconnecting for more than 60 seconds so far, stop reconnecting.
+                        return null;
+                    }
                 }
             })
             .build();
@@ -57,7 +64,6 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
         });
 
         connection.on(HubReceivers.RECEIVE_PROGRESS, (progressVal) => {
-            console.log('p', progressVal);
             setProgressValue(progressVal);
         });
 
@@ -74,6 +80,23 @@ export const useTextProcessorHub = (): UseTextProcessorHub => {
         connection.start().then(() => {
             toast.success('Conected Succesfully.');
             connectionRef.current = connection;
+        });
+
+        const start = async () => {
+            try {
+                await connection.start();
+                toast.success('Conected Succesfully.');
+            } catch (err) {
+                setTimeout(start, 5000);
+            }
+        };
+
+        connection.onclose(async () => {
+            await start();
+        });
+
+        connection.onreconnecting((error) => {
+            toast.warn(`Connection lost due to error "${error}". Reconnecting.`);
         });
 
         return () => {
