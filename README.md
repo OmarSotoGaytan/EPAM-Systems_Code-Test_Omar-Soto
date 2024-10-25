@@ -1,5 +1,6 @@
 # EPAM-Systems_Code-Test_Omar-Soto
 # Project Overview
+[screen-capture (1).webm](https://github.com/user-attachments/assets/6a48fdf2-7f24-4a9e-8b3b-9730f6e163d6)
 
 ## Disclaimers
 
