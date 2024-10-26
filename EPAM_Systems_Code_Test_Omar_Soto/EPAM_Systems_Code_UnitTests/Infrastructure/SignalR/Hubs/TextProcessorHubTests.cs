@@ -7,11 +7,6 @@ using Moq;
 
 namespace EPAM_Systems_Code_UnitTests.Infrastructure.SignalR.Hubs;
 
-//README:
-// So for this  to be honest i did not knew how to test signalr, it was hard to test signalr with the sendAsync method because moq cannot mock extensions methods
-// so i follow and base on this resources to finish these unit tests.
-// https://stackoverflow.com/questions/56254258/mock-signalr-hub-for-testing-dependent-class
-// https://www.codeproject.com/Articles/1266538/Testing-SignalR-Hubs-in-ASP-NET-Core-2-1
 public class TextProcessorHubTests
 {
     private readonly Mock<ITextProcessorService> _mockTextProcessorService;
