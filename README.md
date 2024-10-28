@@ -32,9 +32,14 @@
 
 ### Environment Configuration
 - You need to modify the `.env` file to include the URL where the application back-end is running. In this case, my `.env.local` file looks like this:
-- VITE_SIGNALR_URL=
-- VITE_USER=
-- VITE_PASSWORD=
+#### Docker Compose
+- VITE_SIGNALR_URL=http://localhost:8081/api/
+- VITE_USER=hola
+- VITE_PASSWORD=aloh
+#### Running from Visual 
+- VITE_SIGNALR_URL=https://localhost:7048/
+- VITE_USER=hola
+- VITE_PASSWORD=aloh
 ### Libraries Used
 -  **Tailwind CSS**  to simplify the UI development, tailwind was integrated for styling.
 - **React-Toastify** was included for displaying notifications easily.
